@@ -1,0 +1,18 @@
+row is source
+column is destination
+
+make a dict for the addresses
+key = address
+value = index (of row/column)
+
+empty cells in distance data
+
+distance lookup function(sourceAddress, destAddress):
+    sourceAddress = [x]
+    destAddress = [y]
+    return [x][y]
+
+if row value > column value
+    swap the two
+
+unit test the package lookup function
