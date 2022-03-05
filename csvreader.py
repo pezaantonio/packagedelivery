@@ -6,11 +6,13 @@
 #
 
 import csv
+from email.headerregistry import Address
 from Hashmap import *
 from Package import *
 
 hashtable = Hashmap()
 packageData = "wgups/package.csv"
+addressData = "wgups/addresses.csv"
 
 # loadPackageData
 # Parameter: requires a file to be read into the function
@@ -34,7 +36,25 @@ def loadPackageData(filename):
 
             myPackage = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes)
             hashtable.add(packageID, myPackage)
-
+# Method to return the address index given the string
+# Parameter: an address from a package object as a string
+# Return: the address ID given the address string
+# Space time complexity O(n)
+def addressLookup(addressString):
+    with open(addressData) as addressFile:
+        addressDataCSV = csv.reader(addressFile, delimiter=',')
+        next(addressDataCSV) # skip header
+        for address in addressDataCSV:
+            addressID = int(address[0])
+            addressName = address[1]
+            addressStreet = address[2]
+            if addressStreet == addressString:
+                return addressID
+        
 loadPackageData(packageData)
-for i in range(1,41):
-    print(hashtable.get(i))
+#for i in range(1,41):
+#    print(hashtable.get(i))
+
+#print(hashtable.get(27))
+
+print(addressLookup(hashtable.get(27).address))
