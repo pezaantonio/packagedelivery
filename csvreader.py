@@ -13,29 +13,35 @@ hashtable = Hashmap()
 packageData = "wgups/package.csv"
 addressData = "wgups/addresses.csv"
 
+# Initialize the trucks as lists
+truck1 = []
+truck2 = []
+truck3 = []
+
 # loadPackageData
 # Parameter: requires a file to be read into the function
 # return: Will create package objects based on the csv, then add them to the hashtable
 # Space time complexity: O(n), it will iterate through each item once
-def loadPackageData(filename):
-    with open(filename) as packagefile:
-        packagedata = csv.reader(packagefile, delimiter=',')
-        next(packagedata) # skips header
-        for package in packagedata:
-            packageID = int(package[0])
-            packageAddress = package[1]
-            packageCity = package[2]
-            packageState = package[3]
-            packageZip = package[4]
-            packageDeadline = package[5]
-            packageMass = package[6]
-            if package[7] == '':
-                packageNotes = "No special notes"
-            else:
-                packageNotes = package[7]
+with open(packageData) as packagefile:
+    packagedata = csv.reader(packagefile, delimiter=',')
+    next(packagedata) # skips header
+    for package in packagedata:
+        packageID = int(package[0])
+        packageAddress = package[1]
+        packageCity = package[2]
+        packageState = package[3]
+        packageZip = package[4]
+        packageDeadline = package[5]
+        packageMass = package[6]
+        if package[7] == '':
+            packageNotes = "No special notes"
+        else:
+            packageNotes = package[7]
 
-            myPackage = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes)
-            hashtable.add(packageID, myPackage)
+        packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes)
+
+        
+        hashtable.add(packageID, packageContents)
 
 # Method to return the address index given the string
 # Parameter: an address from a package object as a string
@@ -52,10 +58,9 @@ def addressLookup(addressString):
             if addressStreet == addressString:
                 return addressID
         
-loadPackageData(packageData)
-#for i in range(1,41):
-#    print(hashtable.get(i))
+for i in range(1,41):
+    print(hashtable.get(i))
 
-#print(hashtable.get(27))
+hashtable.print()
 
-print(addressLookup(hashtable.get(27).address))
+#print(addressLookup(hashtable.get(27).address))
