@@ -6,7 +6,6 @@
 #
 
 import csv
-from email.headerregistry import Address
 from Hashmap import *
 from Package import *
 
@@ -17,6 +16,7 @@ addressData = "wgups/addresses.csv"
 # loadPackageData
 # Parameter: requires a file to be read into the function
 # return: Will create package objects based on the csv, then add them to the hashtable
+# Space time complexity: O(n), it will iterate through each item once
 def loadPackageData(filename):
     with open(filename) as packagefile:
         packagedata = csv.reader(packagefile, delimiter=',')
@@ -36,6 +36,7 @@ def loadPackageData(filename):
 
             myPackage = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes)
             hashtable.add(packageID, myPackage)
+
 # Method to return the address index given the string
 # Parameter: an address from a package object as a string
 # Return: the address ID given the address string
