@@ -3,7 +3,6 @@
 # C950 Data Structures and Algorithms 2
 # Algorithm to find the distances 
 #
-from audioop import add
 import csv
 
 # Open CSV file

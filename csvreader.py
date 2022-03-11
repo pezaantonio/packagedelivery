@@ -6,6 +6,7 @@
 #
 
 import csv
+from struct import pack
 from Hashmap import *
 from Package import *
 
@@ -41,12 +42,24 @@ with open(packageData) as packagefile:
 
         packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes, packageStatus)
 
-        if packageContents.deadline == 'EOD':
-            thirdTruck.append(packageContents)
+        if packageContents.id == 19:
+            firstTruck.append(packageContents)
+
+        if packageContents.deadline != 'EOD':
+            if 'Must be' in packageContents.notes or packageContents.notes == "No special notes":
+                firstTruck.append(packageContents)
         
         if packageContents.notes == 'Can only be on truck 2':
             secondTruck.append(packageContents)
         
+        if packageContents not in firstTruck:
+            if packageContents not in secondTruck:
+                if packageContents not in thirdTruck:
+                    if len(thirdTruck) > len(secondTruck):
+                        secondTruck.append(packageContents)
+                    else:
+                        thirdTruck.append(packageContents)
+
         hashtable.add(packageID, packageContents)
 
 # Method to return the address index given the string
@@ -70,6 +83,19 @@ def addressLookup(addressString):
 #hashtable.print()
 
 #print(addressLookup(hashtable.get(27).address))
-
+print("\nsecond truck: \n")
 for i in range(0, len(secondTruck)):
     print(secondTruck[i])
+
+print("\nfirst truck: \n")
+for i in range(0, len(firstTruck)):
+    print(firstTruck[i])
+
+print("\nthird truck: \n")
+for i in range(0, len(thirdTruck)):
+    print(thirdTruck[i])
+
+print("\n\n\n")
+print("first truck: " + str(len(firstTruck)) + "\n")
+print("second truck: " + str(len(secondTruck)) + "\n")
+print("third truck: " + str(len(thirdTruck)) + "\n")
