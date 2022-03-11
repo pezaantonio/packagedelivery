@@ -16,3 +16,13 @@ if row value > column value
     swap the two
 
 unit test the package lookup function
+
+nearest neighbor algorithm
+sort by distance, find the smallest distance and go there
+
+step 1:
+load the trucks
+step 2:
+delivery algorithm comes into play when trucks leave the depot
+
+book: sorting food uses greedy algorithm
