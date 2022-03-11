@@ -14,9 +14,9 @@ packageData = "wgups/package.csv"
 addressData = "wgups/addresses.csv"
 
 # Initialize the trucks as lists
-truck1 = []
-truck2 = []
-truck3 = []
+firstTruck = []
+secondTruck = []
+thirdTruck = []
 
 # loadPackageData
 # Parameter: requires a file to be read into the function
@@ -37,9 +37,15 @@ with open(packageData) as packagefile:
             packageNotes = "No special notes"
         else:
             packageNotes = package[7]
+        packageStatus = "--Pending Delivery--"
 
-        packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes)
+        packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes, packageStatus)
 
+        if packageContents.deadline == 'EOD':
+            thirdTruck.append(packageContents)
+        
+        if packageContents.notes == 'Can only be on truck 2':
+            secondTruck.append(packageContents)
         
         hashtable.add(packageID, packageContents)
 
@@ -58,9 +64,12 @@ def addressLookup(addressString):
             if addressStreet == addressString:
                 return addressID
         
-for i in range(1,41):
-    print(hashtable.get(i))
+#for i in range(1,41):
+#   print(hashtable.get(i))
 
-hashtable.print()
+#hashtable.print()
 
 #print(addressLookup(hashtable.get(27).address))
+
+for i in range(0, len(secondTruck)):
+    print(secondTruck[i])

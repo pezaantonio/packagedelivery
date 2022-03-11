@@ -3,6 +3,7 @@
 # C950 Data Structures and Algorithms 2
 # Algorithm to find the distances 
 #
+from audioop import add
 import csv
 
 # Open CSV file
@@ -22,4 +23,6 @@ def getDistance(row, col):
     
     return float(distance)
 
-print(getDistance(3,4))
+#print(getDistance(3,4))
+for address in addressNames:
+    print(address)
