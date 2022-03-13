@@ -83,19 +83,22 @@ def addressLookup(addressString):
 #hashtable.print()
 
 #print(addressLookup(hashtable.get(27).address))
-print("\nsecond truck: \n")
-for i in range(0, len(secondTruck)):
-    print(secondTruck[i])
-
 print("\nfirst truck: \n")
 for i in range(0, len(firstTruck)):
     print(firstTruck[i])
+
+print("\nsecond truck: \n")
+for i in range(0, len(secondTruck)):
+    print(secondTruck[i])
 
 print("\nthird truck: \n")
 for i in range(0, len(thirdTruck)):
     print(thirdTruck[i])
 
-print("\n\n\n")
+print("\n\n")
 print("first truck: " + str(len(firstTruck)) + "\n")
 print("second truck: " + str(len(secondTruck)) + "\n")
 print("third truck: " + str(len(thirdTruck)) + "\n")
+
+print("\n\n")
+hashtable.print()
