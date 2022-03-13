@@ -42,16 +42,21 @@ with open(packageData) as packagefile:
 
         packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes, packageStatus)
 
+        # package 19 will always be on truck 1 due to its special notes
         if packageContents.id == 19:
             firstTruck.append(packageContents)
 
+        # if the package deadline is 10:30 AM or before, and it has no special notes, make sure its on the first truck
         if packageContents.deadline != 'EOD':
             if 'Must be' in packageContents.notes or packageContents.notes == "No special notes":
                 firstTruck.append(packageContents)
         
+        # If the package can only be on truck 2, put it on truck 2
         if packageContents.notes == 'Can only be on truck 2':
             secondTruck.append(packageContents)
         
+        # if the package is not on any trucks yet, put it on the second or third truck
+        # depending on which is less full
         if packageContents not in firstTruck:
             if packageContents not in secondTruck:
                 if packageContents not in thirdTruck:
@@ -60,6 +65,7 @@ with open(packageData) as packagefile:
                     else:
                         thirdTruck.append(packageContents)
 
+        # regardless of which truck its on, put every package in the hashtable
         hashtable.add(packageID, packageContents)
 
 # Method to return the address index given the string
