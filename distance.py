@@ -15,8 +15,12 @@ with open(distanceFile) as distances:
 with open(addressesFile) as addresses:
     addressNames = list(csv.reader(addresses, delimiter=','))
 
+# function reads the distance data and returns the numeric mileage
+# Parameter: Two ints, row and column and numbers
+# Return: distance as a float
 def getDistance(row, col):
     distance = distanceData[row][col]
+    # if blank, mirror the two parameters
     if distance == '':
         distance = distanceData[col][row]
     

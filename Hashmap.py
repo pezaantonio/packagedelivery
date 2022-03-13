@@ -66,6 +66,7 @@ class Hashmap:
                 self.map[key_hash].pop(i)
                 return True
 
+    # function print everything in the hashmap
     def print(self):
         print('---HashMap---')
         for item in self.map:
