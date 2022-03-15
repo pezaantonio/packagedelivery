@@ -6,9 +6,9 @@
 #
 
 import csv
-from struct import pack
 from Hashmap import *
 from Package import *
+from distance import *
 
 hashtable = Hashmap()
 packageData = "wgups/package.csv"
@@ -38,7 +38,7 @@ with open(packageData) as packagefile:
             packageNotes = "No special notes"
         else:
             packageNotes = package[7]
-        packageStatus = "--Pending Delivery--"
+        packageStatus = "On delivery truck"
 
         packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes, packageStatus)
 
@@ -73,23 +73,28 @@ with open(packageData) as packagefile:
 
 #hashtable.print()
 
-#print(addressLookup(hashtable.get(27).address))
+# print(addressLookup(hashtable.get(27).address))
 print("\nfirst truck: \n")
+print(len(firstTruck))
 for i in range(0, len(firstTruck)):
     print(firstTruck[i])
 
-print("\nsecond truck: \n")
-for i in range(0, len(secondTruck)):
-    print(secondTruck[i])
+# print("\nsecond truck: \n")
+# for i in range(0, len(secondTruck)):
+#     print(secondTruck[i])
 
-print("\nthird truck: \n")
-for i in range(0, len(thirdTruck)):
-    print(thirdTruck[i])
+# print("\nthird truck: \n")
+# for i in range(0, len(thirdTruck)):
+#     print(thirdTruck[i])
 
-print("\n\n")
-print("first truck: " + str(len(firstTruck)) + "\n")
-print("second truck: " + str(len(secondTruck)) + "\n")
-print("third truck: " + str(len(thirdTruck)) + "\n")
+# print("\n\n")
+#print("first truck: " + str(len(firstTruck)) + "\n")
+#print("second truck: " + str(len(secondTruck)) + "\n")
+#print("third truck: " + str(len(thirdTruck)) + "\n")
 
-print("\n\n")
-hashtable.print()
+deliverToClosestAddress(firstTruck, 0)
+
+#print("\nfirst truck: \n")
+#print(len(firstTruck))
+#for i in range(0, len(firstTruck)):
+#    print(firstTruck[i])
