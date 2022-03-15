@@ -9,6 +9,21 @@ import csv
 distanceFile = "wgups/distancedata.csv"
 addressesFile = "wgups/addresses.csv"
 
+# Method to return the address index given the string
+# Parameter: an address from a package object as a string
+# Return: the address ID given the address string
+# Space time complexity O(n)
+def addressLookup(addressString):
+    with open(addressesFile) as addressFile:
+        addressDataCSV = csv.reader(addressFile, delimiter=',')
+        next(addressDataCSV) # skip header
+        for address in addressDataCSV:
+            addressID = int(address[0])
+            addressName = address[1]
+            addressStreet = address[2]
+            if addressStreet == addressString:
+                return addressID
+
 with open(distanceFile) as distances:
     distanceData = list(csv.reader(distances, delimiter=','))
 

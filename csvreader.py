@@ -67,21 +67,6 @@ with open(packageData) as packagefile:
 
         # regardless of which truck its on, put every package in the hashtable
         hashtable.add(packageID, packageContents)
-
-# Method to return the address index given the string
-# Parameter: an address from a package object as a string
-# Return: the address ID given the address string
-# Space time complexity O(n)
-def addressLookup(addressString):
-    with open(addressData) as addressFile:
-        addressDataCSV = csv.reader(addressFile, delimiter=',')
-        next(addressDataCSV) # skip header
-        for address in addressDataCSV:
-            addressID = int(address[0])
-            addressName = address[1]
-            addressStreet = address[2]
-            if addressStreet == addressString:
-                return addressID
         
 #for i in range(1,41):
 #   print(hashtable.get(i))
