@@ -94,7 +94,7 @@ for i in range(0, len(firstTruck)):
 
 deliverToClosestAddress(firstTruck, 0)
 
-#print("\nfirst truck: \n")
-#print(len(firstTruck))
+print("\nfirst truck: \n")
+print(len(firstTruck))
 #for i in range(0, len(firstTruck)):
 #    print(firstTruck[i])

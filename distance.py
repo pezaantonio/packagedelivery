@@ -80,13 +80,14 @@ def deliverToClosestAddress(truckWithPackages, currentLocation):
 
     for packageOnTruck in truckWithPackages:
         pOT = addressLookupByName(packageOnTruck.address)
-        if getCurrentDistance(currentLocation, pOT) < smallestDistance:
+        if getCurrentDistance(currentLocation, pOT) <= smallestDistance:
             smallestDistance = getCurrentDistance(currentLocation, pOT)
             location = pOT
             print("\n" + str(smallestDistance))
             print("\nCurrent location: " + str(addressLookupByID(location)))
             packageOnTruck.status = "Delivered"
             truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
+            deliverToClosestAddress(truckWithPackages, currentLocation)
     
     for packageOnTruck in truckWithPackages:
         if getCurrentDistance(currentLocation, pOT) == smallestDistance:
