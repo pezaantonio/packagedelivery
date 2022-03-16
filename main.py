@@ -5,3 +5,11 @@
 # 
 # Purpose: Main python file to run interface for program
 #
+import distance
+import csvreader
+
+firstTrip = []
+secondTrip = []
+thirdTrip =[]
+
+distance.deliverToClosestAddress(csvreader.getFirstTruck(), 0)

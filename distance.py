@@ -3,8 +3,15 @@
 # C950 Data Structures and Algorithms 2
 # Algorithm to find the distances 
 #
+from cgitb import small
 import csv
+import csvreader
 from queue import Empty
+
+# Empty Trucks
+firstTruckSorted =[]
+secondTruckSorted =[]
+thirdTruckSorted =[]
 
 # Truck leaving the hub at assigned time
 firstTruckDepart = ['8:00:00']
@@ -73,25 +80,64 @@ def deliverToClosestAddress(truckWithPackages, currentLocation):
     if truckWithPackages is Empty:
         print("empty truck")
     
-    smallestDistance = 50.0
-    location = 0
+    smallestDistance = 30.0
+    location = currentLocation
 
     print("\nCurrent location: " + str(addressLookupByID(location)))
 
     for packageOnTruck in truckWithPackages:
-        pOT = addressLookupByName(packageOnTruck.address)
-        if getCurrentDistance(currentLocation, pOT) <= smallestDistance:
-            smallestDistance = getCurrentDistance(currentLocation, pOT)
-            location = pOT
-            print("\n" + str(smallestDistance))
-            print("\nCurrent location: " + str(addressLookupByID(location)))
-            packageOnTruck.status = "Delivered"
-            truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
-            deliverToClosestAddress(truckWithPackages, currentLocation)
+        addressOfPackage = addressLookupByName(packageOnTruck.address)
+        if getCurrentDistance(currentLocation, addressOfPackage) <= smallestDistance:
+            smallestDistance = getCurrentDistance(currentLocation, addressOfPackage)
+            location = addressOfPackage
+            print("\nFound new smallest distance: " + str(addressLookupByID(location) + "\t" + str(packageOnTruck.address)))
     
     for packageOnTruck in truckWithPackages:
-        if getCurrentDistance(currentLocation, pOT) == smallestDistance:
-            packageOnTruck.status = "Delivered"
-            truckWithPackages.pop(truckWithPackages.index[packageOnTruck])
-            currentLocation = location
-            deliverToClosestAddress(truckWithPackages, currentLocation)
+        addressOfPackage = addressLookupByName(packageOnTruck.address)
+        if getCurrentDistance(currentLocation, addressOfPackage) == smallestDistance:
+            if packageOnTruck in csvreader.getFirstTruck():
+                print("\nWas in first truck")
+                firstTruckSorted.append(packageOnTruck)
+                print("\nPopped package: " + str(packageOnTruck.id))
+                truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
+                currentLocation = location
+                deliverToClosestAddress(truckWithPackages, currentLocation)
+            elif packageOnTruck in csvreader.getSecondTruck():
+                print("\nWas in second truck")
+                secondTruckSorted.append(packageOnTruck)
+                print("\nPopped package: " + str(packageOnTruck.id))
+                truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
+                currentLocation = location
+                deliverToClosestAddress(truckWithPackages, currentLocation)
+            elif packageOnTruck in csvreader.getThirdTruck():
+                print("\nWas in third truck")
+                thirdTruckSorted.append(packageOnTruck)
+                print("\nPopped package: " + str(packageOnTruck.id))
+                truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
+                currentLocation = location
+                deliverToClosestAddress(truckWithPackages, currentLocation)
+
+            
+
+    # for packageOnTruck in truckWithPackages:
+    #     addressOfPackage = addressLookupByName(packageOnTruck.address)
+    #     print("\n" + str(addressLookupByID(packageOnTruck.id)) + "\t" + str(packageOnTruck.id) + "\n")
+    #     if getCurrentDistance(currentLocation, addressOfPackage) <= smallestDistance:
+    #         smallestDistance = getCurrentDistance(currentLocation, addressOfPackage)
+    #         location = addressOfPackage
+    #         print("\n" + str(smallestDistance))
+    #         print("\nNew location: " + str(addressLookupByID(location)))
+    
+    # for packageOnTruck in truckWithPackages:
+    #     addressOfPackage = addressLookupByName(packageOnTruck.address)
+    #     if getCurrentDistance(currentLocation, addressOfPackage) == smallestDistance:
+    #         if packageOnTruck in csvreader.getFirstTruck():
+    #             firstTruckSorted.append(packageOnTruck)
+    #             currentLocation = location
+    #             deliverToClosestAddress(truckWithPackages)
+    #         elif packageOnTruck in csvreader.getSecondTruck():
+    #             secondTruckSorted.append(packageOnTruck)
+    #             currentLocation = location
+    #         elif packageOnTruck in csvreader.getThirdTruck():
+    #             thirdTruckSorted.append(packageOnTruck)
+    #             currentLocation = location

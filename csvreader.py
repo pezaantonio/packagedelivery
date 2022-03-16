@@ -4,11 +4,9 @@
 # This file will read the given csv files and store them
 # in the appropriate data structure
 #
-
 import csv
 from Hashmap import *
 from Package import *
-from distance import *
 
 hashtable = Hashmap()
 packageData = "wgups/package.csv"
@@ -68,33 +66,17 @@ with open(packageData) as packagefile:
         # regardless of which truck its on, put every package in the hashtable
         hashtable.add(packageID, packageContents)
         
-#for i in range(1,41):
-#   print(hashtable.get(i))
+def getFirstTruck():
+    return firstTruck
 
-#hashtable.print()
+def getSecondTruck():
+    return secondTruck
 
-# print(addressLookup(hashtable.get(27).address))
+def getThirdTruck():
+    return thirdTruck
+
+
 print("\nfirst truck: \n")
 print(len(firstTruck))
 for i in range(0, len(firstTruck)):
     print(firstTruck[i])
-
-# print("\nsecond truck: \n")
-# for i in range(0, len(secondTruck)):
-#     print(secondTruck[i])
-
-# print("\nthird truck: \n")
-# for i in range(0, len(thirdTruck)):
-#     print(thirdTruck[i])
-
-# print("\n\n")
-#print("first truck: " + str(len(firstTruck)) + "\n")
-#print("second truck: " + str(len(secondTruck)) + "\n")
-#print("third truck: " + str(len(thirdTruck)) + "\n")
-
-deliverToClosestAddress(firstTruck, 0)
-
-print("\nfirst truck: \n")
-print(len(firstTruck))
-#for i in range(0, len(firstTruck)):
-#    print(firstTruck[i])
