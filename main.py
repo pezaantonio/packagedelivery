@@ -13,3 +13,12 @@ secondTrip = []
 thirdTrip =[]
 
 distance.deliverToClosestAddress(csvreader.getFirstTruck(), 0)
+distance.deliverToClosestAddress(csvreader.getSecondTruck(), 0)
+distance.deliverToClosestAddress(csvreader.getThirdTruck(), 0)
+
+print("\n")
+distance.getSortedTruck(1)
+print("\n")
+distance.getSortedTruck(2)
+print("\n")
+distance.getSortedTruck(3)

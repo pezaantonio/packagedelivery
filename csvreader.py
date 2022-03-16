@@ -36,7 +36,7 @@ with open(packageData) as packagefile:
             packageNotes = "No special notes"
         else:
             packageNotes = package[7]
-        packageStatus = "On delivery truck"
+        packageStatus = "At the hub"
 
         packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes, packageStatus)
 

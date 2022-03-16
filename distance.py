@@ -37,6 +37,10 @@ def addressLookupByName(addressString):
             if addressStreet == addressString:
                 return addressID
 
+# Method to return the address string given the ID
+# Parameter: an address from a package object as an int
+# Return: the address ID given the address ID
+# Space time complexity O(n)
 def addressLookupByID(ID):
     with open(addressesFile) as addressFile:
         addressDataCSV = csv.reader(addressFile, delimiter=',')
@@ -117,6 +121,7 @@ def deliverToClosestAddress(truckWithPackages, currentLocation):
         if getCurrentDistance(currentLocation, addressOfPackage) == smallestDistance:
             if packageOnTruck in csvreader.getFirstTruck():
                 #print("\nWas in first truck")
+                packageOnTruck.status = "on delivery truck"
                 firstTruckSorted.append(packageOnTruck)
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
@@ -124,6 +129,7 @@ def deliverToClosestAddress(truckWithPackages, currentLocation):
                 deliverToClosestAddress(truckWithPackages, currentLocation)
             elif packageOnTruck in csvreader.getSecondTruck():
                 #print("\nWas in second truck")
+                packageOnTruck.status = "on delivery truck"
                 secondTruckSorted.append(packageOnTruck)
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
@@ -131,33 +137,25 @@ def deliverToClosestAddress(truckWithPackages, currentLocation):
                 deliverToClosestAddress(truckWithPackages, currentLocation)
             elif packageOnTruck in csvreader.getThirdTruck():
                 #print("\nWas in third truck")
+                packageOnTruck.status = "on delivery truck"
                 thirdTruckSorted.append(packageOnTruck)
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
                 currentLocation = location
                 deliverToClosestAddress(truckWithPackages, currentLocation)
 
-            
-
-    # for packageOnTruck in truckWithPackages:
-    #     addressOfPackage = addressLookupByName(packageOnTruck.address)
-    #     print("\n" + str(addressLookupByID(packageOnTruck.id)) + "\t" + str(packageOnTruck.id) + "\n")
-    #     if getCurrentDistance(currentLocation, addressOfPackage) <= smallestDistance:
-    #         smallestDistance = getCurrentDistance(currentLocation, addressOfPackage)
-    #         location = addressOfPackage
-    #         print("\n" + str(smallestDistance))
-    #         print("\nNew location: " + str(addressLookupByID(location)))
-    
-    # for packageOnTruck in truckWithPackages:
-    #     addressOfPackage = addressLookupByName(packageOnTruck.address)
-    #     if getCurrentDistance(currentLocation, addressOfPackage) == smallestDistance:
-    #         if packageOnTruck in csvreader.getFirstTruck():
-    #             firstTruckSorted.append(packageOnTruck)
-    #             currentLocation = location
-    #             deliverToClosestAddress(truckWithPackages)
-    #         elif packageOnTruck in csvreader.getSecondTruck():
-    #             secondTruckSorted.append(packageOnTruck)
-    #             currentLocation = location
-    #         elif packageOnTruck in csvreader.getThirdTruck():
-    #             thirdTruckSorted.append(packageOnTruck)
-    #             currentLocation = location
+# Function to return the the sorted truck 
+# Parameter: an int from 1-3
+# return: Optimal truck 
+def getSortedTruck(truckNum):
+    if truckNum == 1:
+        for i in range(0, len(firstTruckSorted)):
+            print(firstTruckSorted[i])
+    elif truckNum == 2:
+        for i in range(0, len(secondTruckSorted)):
+            print(secondTruckSorted[i])
+    elif truckNum == 3:
+        for i in range(0, len(thirdTruckSorted)):
+            print(thirdTruckSorted[i])
+    else:
+        print("Please enter a valid number")
