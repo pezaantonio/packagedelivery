@@ -3,8 +3,8 @@
 # C950 Data Structures and Algorithms 2
 # Algorithm to find the distances 
 #
-from cgitb import small
 import csv
+from json import load
 import csvreader
 from queue import Empty
 
@@ -61,7 +61,7 @@ with open(addressesFile) as addresses:
 # function reads the distance data and returns the numeric mileage
 # Parameter: Two ints, row and column and numbers
 # Return: distance as a float
-def getCurrentDistance(row, col):
+def getDistanceBetween(row, col):
     distance = distanceData[row][col]
     # if blank, mirror the two parameters
     if distance == '':
@@ -72,7 +72,7 @@ def getCurrentDistance(row, col):
 # function reads the distance data and returns the numeric mileage between two given addresses
 # Parameter: Two ints, row and column and numbers, sumDist
 # Return: sumDist as a float
-def getDistanceBetween(row, col, sumDist):
+def getAndStoreDistance(row, col, sumDist):
     distance = distanceData[row][col]
     if distance == '':
         distance = distanceData[col][row]
@@ -81,10 +81,9 @@ def getDistanceBetween(row, col, sumDist):
     return sumDist
 
 # Function to sort packages and load them on the truck as a sorted stacked data structure
-# The first lines of code will check to see if the list is empty, if empty it will return an empty truck string
-# It will then assign the smallest distance with the float of 30, since 30 is higher than all distances in the csv
-# the location will be equal the given currentLocation
-# 
+# The first function call is calling the minDistance() function to find the smallest distance in a list of a packages from the current
+# location
+#
 # Next, the for loop will iterate through each package
 # it will take the package address and then calculate the distance between the current location and the address
 # if the distance between the current location and the package address is less than or equal to the smallest distance, it will 
@@ -98,27 +97,14 @@ def getDistanceBetween(row, col, sumDist):
 #
 # Space time complexity: O(n^2)
 # Justification: Each package will be iterated by two for loops
-def deliverToClosestAddress(truckWithPackages, currentLocation):
-    if truckWithPackages is Empty:
-        print("empty truck")
+def deliverToClosestAddress(currentLocation, truckWithPackages):
     
-    smallestDistance = 30.0
+    smallestDistance = minDistance(currentLocation, truckWithPackages)
     location = currentLocation
-
-    print("\nCurrent location: " + str(addressLookupByID(location)))
-
-    for packageOnTruck in truckWithPackages:
-        addressOfPackage = addressLookupByName(packageOnTruck.address)
-        print("\ndistance checked: " + str(smallestDistance))
-        if getCurrentDistance(currentLocation, addressOfPackage) <= smallestDistance:
-            smallestDistance = getCurrentDistance(currentLocation, addressOfPackage)
-            location = addressOfPackage
-            print("\nFound new smallest distance: " + str(addressLookupByID(location) + "\t" + str(packageOnTruck.address)))
-            print("\nHere is the distance: " + str(smallestDistance))
     
     for packageOnTruck in truckWithPackages:
         addressOfPackage = addressLookupByName(packageOnTruck.address)
-        if getCurrentDistance(currentLocation, addressOfPackage) == smallestDistance:
+        if getDistanceBetween(currentLocation, addressOfPackage) == smallestDistance:
             if packageOnTruck in csvreader.getFirstTruck():
                 #print("\nWas in first truck")
                 packageOnTruck.status = "on delivery truck"
@@ -126,7 +112,7 @@ def deliverToClosestAddress(truckWithPackages, currentLocation):
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
                 currentLocation = location
-                deliverToClosestAddress(truckWithPackages, currentLocation)
+                deliverToClosestAddress(currentLocation, truckWithPackages)
             elif packageOnTruck in csvreader.getSecondTruck():
                 #print("\nWas in second truck")
                 packageOnTruck.status = "on delivery truck"
@@ -134,7 +120,7 @@ def deliverToClosestAddress(truckWithPackages, currentLocation):
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
                 currentLocation = location
-                deliverToClosestAddress(truckWithPackages, currentLocation)
+                deliverToClosestAddress(currentLocation, truckWithPackages)
             elif packageOnTruck in csvreader.getThirdTruck():
                 #print("\nWas in third truck")
                 packageOnTruck.status = "on delivery truck"
@@ -142,7 +128,7 @@ def deliverToClosestAddress(truckWithPackages, currentLocation):
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
                 currentLocation = location
-                deliverToClosestAddress(truckWithPackages, currentLocation)
+                deliverToClosestAddress(currentLocation, truckWithPackages)
 
 # Function to return the the sorted truck 
 # Parameter: an int from 1-3
@@ -159,3 +145,21 @@ def getSortedTruck(truckNum):
             print(thirdTruckSorted[i])
     else:
         print("Please enter a valid number")
+
+# Function to find the smallest distance given a starting location and a list of packages
+# Parameters: int currentLocaiton, list truckWithPackages
+# Return: float smallest distance. This smallest distance is the smallest distance between the current location
+# and the address on the package
+def minDistance(currentLocation, truckWithPackages):
+    if truckWithPackages is Empty:
+        print("empty truck")
+
+    smallestDistance = 30.0
+
+    for packageOnTruck in truckWithPackages:
+        addressOfPackage = addressLookupByName(packageOnTruck.address)
+        #print(str(packageOnTruck))
+        if getDistanceBetween(currentLocation, addressOfPackage) <= smallestDistance:
+            smallestDistance = getDistanceBetween(currentLocation, addressOfPackage)
+            
+    return smallestDistance

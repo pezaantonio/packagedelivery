@@ -12,13 +12,10 @@ firstTrip = []
 secondTrip = []
 thirdTrip =[]
 
-distance.deliverToClosestAddress(csvreader.getFirstTruck(), 0)
-distance.deliverToClosestAddress(csvreader.getSecondTruck(), 0)
-distance.deliverToClosestAddress(csvreader.getThirdTruck(), 0)
+#print(distance.minDistance(0, csvreader.getFirstTruck()))
 
-print("\n")
-distance.getSortedTruck(1)
-print("\n")
-distance.getSortedTruck(2)
-print("\n")
-distance.getSortedTruck(3)
+# Load the trucks
+distance.deliverToClosestAddress(0, csvreader.getFirstTruck())
+distance.deliverToClosestAddress(0, csvreader.getSecondTruck())
+distance.deliverToClosestAddress(0, csvreader.getThirdTruck())
+

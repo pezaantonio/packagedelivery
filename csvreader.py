@@ -8,11 +8,14 @@ import csv
 from Hashmap import *
 from Package import *
 
+# Initializing the hashmap, and the two data files being used
 hashtable = Hashmap()
 packageData = "wgups/package.csv"
 addressData = "wgups/addresses.csv"
 
 # Initialize the trucks as lists
+# These lists will be unsorted, but will be loaded based on 
+# delivery deadline and special notes
 firstTruck = []
 secondTruck = []
 thirdTruck = []
@@ -37,8 +40,9 @@ with open(packageData) as packagefile:
         else:
             packageNotes = package[7]
         packageStatus = "At the hub"
+        packageDeliveryTime = "7:50:00"
 
-        packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes, packageStatus)
+        packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes, packageStatus, packageDeliveryTime)
 
         # package 19 will always be on truck 1 due to its special notes
         if packageContents.id == 19:
@@ -66,6 +70,7 @@ with open(packageData) as packagefile:
         # regardless of which truck its on, put every package in the hashtable
         hashtable.add(packageID, packageContents)
         
+# These three functions are being used to return the unsorted list of items on the truck
 def getFirstTruck():
     return firstTruck
 
@@ -74,9 +79,3 @@ def getSecondTruck():
 
 def getThirdTruck():
     return thirdTruck
-
-
-print("\nfirst truck: \n")
-print(len(firstTruck))
-for i in range(0, len(firstTruck)):
-    print(firstTruck[i])
