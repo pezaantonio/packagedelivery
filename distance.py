@@ -37,6 +37,10 @@ def addressLookupByName(addressString):
             if addressStreet == addressString:
                 return addressID
 
+# Method to return the address index given the string
+# Parameter: an address from a package object as a string
+# Return: the address ID given the address string
+# Space time complexity O(n)
 def addressLookupByStreet(addressString):
     with open(addressesFile) as addressFile:
         addressDataCSV = csv.reader(addressFile, delimiter=',')
@@ -92,8 +96,9 @@ def getAndStoreDistance(row, col, sumDist):
     return sumDist
 
 # Function to sort packages and load them on the truck as a sorted stacked data structure
-# The first function call is calling the minDistance() function to find the smallest distance in a list of a packages from the current
-# location
+# The first for loop will loop through each package on the truck, until the smallest distance is found
+# it will then store the smallest distance in the smallestDistance variable
+# it will then change the location to the address of the package
 #
 # Next, the for loop will iterate through each package
 # it will take the package address and then calculate the distance between the current location and the address
@@ -109,9 +114,17 @@ def getAndStoreDistance(row, col, sumDist):
 # Space time complexity: O(n^2)
 # Justification: Each package will be iterated by two for loops
 def deliverToClosestAddress(currentLocation, truckWithPackages):
-    
-    smallestDistance = minDistance(currentLocation, truckWithPackages)
-    location = currentLocation
+    if truckWithPackages is Empty:
+        print("empty truck")
+
+    smallestDistance = 30.0
+    location = 0
+
+    for packageOnTruck in truckWithPackages:
+        addressOfPackage = addressLookupByName(packageOnTruck.address)
+        if getDistanceBetween(currentLocation, addressOfPackage) <= smallestDistance:
+            smallestDistance = getDistanceBetween(currentLocation, addressOfPackage)
+            location = addressOfPackage
     
     for packageOnTruck in truckWithPackages:
         addressOfPackage = addressLookupByName(packageOnTruck.address)
@@ -167,7 +180,7 @@ def getDistanceTraveled(truckWithPackages, tripDistance):
         print("\nDistance so far: " + str(tripDistance))
     tripDistance = getAndStoreDistance(currentLocation, 0, tripDistance)
     print("From: " + str(currentLocation) + " " + str(addressLookupByID(currentLocation)) + "\nTO: " + str(addressLookupByID(0)))
-    print("\nRoundtrip total: " + str(tripDistance))
+    print("\n++++++++Roundtrip total: " + str(tripDistance) + "++++++++")
 
 
 # Function to return the the sorted truck 
