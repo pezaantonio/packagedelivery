@@ -79,3 +79,7 @@ def getSecondTruck():
 
 def getThirdTruck():
     return thirdTruck
+
+def printFirstTruck():
+    for i in range(0, len(firstTruck)):
+        print(firstTruck[i])

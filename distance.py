@@ -37,6 +37,17 @@ def addressLookupByName(addressString):
             if addressStreet == addressString:
                 return addressID
 
+def addressLookupByStreet(addressString):
+    with open(addressesFile) as addressFile:
+        addressDataCSV = csv.reader(addressFile, delimiter=',')
+        next(addressDataCSV) # skip header
+        for address in addressDataCSV:
+            addressID = int(address[0])
+            addressName = address[1]
+            addressStreet = address[2]
+            if addressStreet == addressString:
+                return addressName
+
 # Method to return the address string given the ID
 # Parameter: an address from a package object as an int
 # Return: the address ID given the address ID
@@ -52,7 +63,7 @@ def addressLookupByID(ID):
             if addressID == ID:
                 return addressName
 
-with open(distanceFile) as distances:
+with open(distanceFile, mode='r', encoding='utf-8-sig') as distances:
     distanceData = list(csv.reader(distances, delimiter=','))
 
 with open(addressesFile) as addresses:
@@ -130,22 +141,6 @@ def deliverToClosestAddress(currentLocation, truckWithPackages):
                 currentLocation = location
                 deliverToClosestAddress(currentLocation, truckWithPackages)
 
-# Function to return the the sorted truck 
-# Parameter: an int from 1-3
-# return: Optimal truck 
-def getSortedTruck(truckNum):
-    if truckNum == 1:
-        for i in range(0, len(firstTruckSorted)):
-            print(firstTruckSorted[i])
-    elif truckNum == 2:
-        for i in range(0, len(secondTruckSorted)):
-            print(secondTruckSorted[i])
-    elif truckNum == 3:
-        for i in range(0, len(thirdTruckSorted)):
-            print(thirdTruckSorted[i])
-    else:
-        print("Please enter a valid number")
-
 # Function to find the smallest distance given a starting location and a list of packages
 # Parameters: int currentLocaiton, list truckWithPackages
 # Return: float smallest distance. This smallest distance is the smallest distance between the current location
@@ -158,8 +153,32 @@ def minDistance(currentLocation, truckWithPackages):
 
     for packageOnTruck in truckWithPackages:
         addressOfPackage = addressLookupByName(packageOnTruck.address)
-        #print(str(packageOnTruck))
         if getDistanceBetween(currentLocation, addressOfPackage) <= smallestDistance:
             smallestDistance = getDistanceBetween(currentLocation, addressOfPackage)
             
     return smallestDistance
+
+def getDistanceTraveled(truckWithPackages, tripDistance):
+    currentLocation = 0
+    for item in truckWithPackages:
+        tripDistance = getAndStoreDistance(currentLocation, addressLookupByName(item.address), tripDistance)
+        print("From: " + str(currentLocation) + " " + str(addressLookupByID(currentLocation)) + "\nTO: " + str(addressLookupByStreet(item.address)))
+        currentLocation = addressLookupByName(item.address)
+        print("\nDistance so far: " + str(tripDistance))
+    tripDistance = getAndStoreDistance(currentLocation, 0, tripDistance)
+    print("From: " + str(currentLocation) + " " + str(addressLookupByID(currentLocation)) + "\nTO: " + str(addressLookupByID(0)))
+    print("\nRoundtrip total: " + str(tripDistance))
+
+
+# Function to return the the sorted truck 
+# Parameter: an int from 1-3
+# return: Optimal truck 
+def getSortedTruck(truckNum):
+    if truckNum == 1:
+        return firstTruckSorted
+    elif truckNum == 2:
+        return secondTruckSorted
+    elif truckNum == 3:
+        return thirdTruckSorted
+    else:
+        print("Please enter a valid number")
