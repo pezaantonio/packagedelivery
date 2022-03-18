@@ -31,6 +31,3 @@ class Graph:
 
 
 graph = Graph()
-
-with open(distanceFile, mode='r', encoding='utf-8-sig') as distances:
-    distanceData = list(csv.reader(distances, delimiter=','))

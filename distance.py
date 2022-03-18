@@ -3,8 +3,8 @@
 # C950 Data Structures and Algorithms 2
 # Algorithm to find the distances 
 #
+import datetime
 import csv
-from json import load
 import csvreader
 from queue import Empty
 
@@ -12,11 +12,6 @@ from queue import Empty
 firstTruckSorted =[]
 secondTruckSorted =[]
 thirdTruckSorted =[]
-
-# Truck leaving the hub at assigned time
-firstTruckDepart = ['8:00:00']
-secondTruckDepart = ['9:10:00']
-thirdTruckDepart = ['11:00:00']
 
 # Open CSV file
 distanceFile = "wgups/distancedata.csv"
@@ -131,7 +126,7 @@ def deliverToClosestAddress(currentLocation, truckWithPackages):
         if getDistanceBetween(currentLocation, addressOfPackage) == smallestDistance:
             if packageOnTruck in csvreader.getFirstTruck():
                 #print("\nWas in first truck")
-                packageOnTruck.status = "on delivery truck"
+                packageOnTruck.status = "---ON DELIVERY TRUCK---"
                 firstTruckSorted.append(packageOnTruck)
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
@@ -139,7 +134,7 @@ def deliverToClosestAddress(currentLocation, truckWithPackages):
                 deliverToClosestAddress(currentLocation, truckWithPackages)
             elif packageOnTruck in csvreader.getSecondTruck():
                 #print("\nWas in second truck")
-                packageOnTruck.status = "on delivery truck"
+                packageOnTruck.status = "---ON DELIVERY TRUCK---"
                 secondTruckSorted.append(packageOnTruck)
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
@@ -147,7 +142,7 @@ def deliverToClosestAddress(currentLocation, truckWithPackages):
                 deliverToClosestAddress(currentLocation, truckWithPackages)
             elif packageOnTruck in csvreader.getThirdTruck():
                 #print("\nWas in third truck")
-                packageOnTruck.status = "on delivery truck"
+                packageOnTruck.status = "---ON DELIVERY TRUCK---"
                 thirdTruckSorted.append(packageOnTruck)
                 #print("\nPopped package: " + str(packageOnTruck.id))
                 truckWithPackages.pop(truckWithPackages.index(packageOnTruck))
@@ -171,6 +166,18 @@ def minDistance(currentLocation, truckWithPackages):
             
     return smallestDistance
 
+# 
+# Function to keep track of time 
+#
+def timetoDeliver(distance):
+    timeTraveled = distance / 18
+    timeObj = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
+
+#
+# Function: calculates total distance traveled
+# Parameters: list of truck with packages, distance
+# Return: Prints out calculated total trip distance
+#
 def getDistanceTraveled(truckWithPackages, tripDistance):
     currentLocation = 0
     for item in truckWithPackages:
@@ -181,7 +188,6 @@ def getDistanceTraveled(truckWithPackages, tripDistance):
     tripDistance = getAndStoreDistance(currentLocation, 0, tripDistance)
     print("From: " + str(currentLocation) + " " + str(addressLookupByID(currentLocation)) + "\nTO: " + str(addressLookupByID(0)))
     print("\n++++++++Roundtrip total: " + str(tripDistance) + "++++++++")
-
 
 # Function to return the the sorted truck 
 # Parameter: an int from 1-3

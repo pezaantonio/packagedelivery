@@ -39,7 +39,7 @@ with open(packageData) as packagefile:
             packageNotes = "No special notes"
         else:
             packageNotes = package[7]
-        packageStatus = "At the hub"
+        packageStatus = "---AT THE HUB---"
         packageDeliveryTime = "7:50:00"
 
         packageContents = Package(packageID, packageAddress, packageCity, packageState, packageZip, packageDeadline, packageMass, packageNotes, packageStatus, packageDeliveryTime)
@@ -83,3 +83,6 @@ def getThirdTruck():
 def printFirstTruck():
     for i in range(0, len(firstTruck)):
         print(firstTruck[i])
+
+def getHashmap():
+    return hashtable
