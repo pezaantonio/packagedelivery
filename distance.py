@@ -185,6 +185,7 @@ def getDistanceTraveled(truckWithPackages, tripDistance):
         print("From: " + str(currentLocation) + " " + str(addressLookupByID(currentLocation)) + "\nTO: " + str(addressLookupByStreet(item.address)))
         currentLocation = addressLookupByName(item.address)
         print("\nDistance so far: " + str(tripDistance))
+        item.status = "***Delivered***"
     tripDistance = getAndStoreDistance(currentLocation, 0, tripDistance)
     print("From: " + str(currentLocation) + " " + str(addressLookupByID(currentLocation)) + "\nTO: " + str(addressLookupByID(0)))
     print("\n++++++++Roundtrip total: " + str(tripDistance) + "++++++++")
