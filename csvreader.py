@@ -71,6 +71,7 @@ with open(packageData) as packagefile:
         hashtable.add(packageID, packageContents)
         
 # These three functions are being used to return the unsorted list of items on the truck
+# Space Time Complexity: O(1)
 def getFirstTruck():
     return firstTruck
 
@@ -80,9 +81,7 @@ def getSecondTruck():
 def getThirdTruck():
     return thirdTruck
 
-def printFirstTruck():
-    for i in range(0, len(firstTruck)):
-        print(firstTruck[i])
-
+# This function is used to return the loaded hashtable
+# Space Time Complexity: O(1)
 def getHashmap():
     return hashtable
