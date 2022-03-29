@@ -88,6 +88,12 @@ while userInput != "quit" or userInput != 'q':
         else:
             searchedPackage.status = "Delivered"
             print(str(searchedPackage.id) + "\t" + str(searchedPackage.status) + " at " + str(searchedPackage.deliveryTime))
+        userInput = input("""\nPlease select an option
+    1. Track a package by its ID number
+    2. Track all packages
+
+    Type 'quit' or 'q' to exit the program\n
+    """)
 
     #User input 2 is to check all packages at a given time
     elif userInput == '2':
@@ -122,8 +128,15 @@ while userInput != "quit" or userInput != 'q':
             else:
                 hashm.get(item).status = "Delivered"
                 print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status) + " at " + str(timeOnPackage))
+        userInput = input("""\nPlease select an option
+    1. Track a package by its ID number
+    2. Track all packages
+
+    Type 'quit' or 'q' to exit the program\n
+    """)
 
     elif userInput == "quit" or userInput == 'q':
+        print("Thank you for stopping by!")
         exit()
     else:
         print("Please enter a valid entry")
