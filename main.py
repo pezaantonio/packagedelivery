@@ -49,41 +49,87 @@ userInput = input("""\nPlease select an option
     Type 'quit' or 'q' to exit the program\n
     """)
 # User input 1 is to check individual packages
-if userInput == '1':
-    print("Choice 1")
-#User input 2 is to check all packages at a given time
-elif userInput == '2':
-    timeInput = input("Enter a time to check the status of all packages (HH:MM:SS): ")
-    (hrs, min, sec) = timeInput.split(':')
-    dateTimeInput = datetime.timedelta(hours=int(hrs), minutes=int(min), seconds=int(sec))
-
-    for item in range(1,41):
-        timeOnPackage = hashm.get(item).deliveryTime
-        if timeOnPackage >= dateTimeInput:
-            if hashm.get(item) in firstTruckDone:
+while userInput != "quit" or userInput != 'q':
+    if userInput == '1':
+        try:
+            packageInput = int(input("Please enter a valid package ID: "))
+            if packageInput > 40 or packageInput < 1:
+                print("ERROR - Entry was not a valid package ID")
+                packageInput = int(input("Please enter a valid package ID: "))
+        except:
+            print("ERROR - Entry was not a valid package ID")
+            packageInput = int(input("Please enter a valid package ID: "))
+        timeInput = input("Enter a time to check the status of the package: ")
+        (hrs, min, sec) = timeInput.split(':')
+        dateTimeInput = datetime.timedelta(hours=int(hrs), minutes=int(min), seconds=int(sec))
+        searchedPackage = hashm.get(packageInput)
+        if searchedPackage.deliveryTime >= dateTimeInput:
+            if searchedPackage in firstTruckDone:
                 if dateTimeInput >= firstTruckDepart:
-                    hashm.get(item).status = "En Route"
-                    print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status))
+                    searchedPackage.status = "En Route"
+                    print(str(searchedPackage.id) + "\t" + str(searchedPackage.status) + " will arrive by " + str(searchedPackage.deliveryTime))
                 else:
-                    hashm.get(item).status = "At the hub"
-                    print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status))
-            elif hashm.get(item) in secondTruckDone:
+                    searchedPackage.status = "At the hub"
+                    print(str(searchedPackage.id) + "\t" + str(searchedPackage.status) + " will arrive by " + str(searchedPackage.deliveryTime))
+            elif searchedPackage in secondTruckDone:
                 if dateTimeInput >= secondTruckDepart:
-                    hashm.get(item).status = "En Route"
-                    print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status))
+                    searchedPackage.status = "En Route"
+                    print(str(searchedPackage.id) + "\t" + str(searchedPackage.status) + " will arrive by " + str(searchedPackage.deliveryTime))
                 else:
-                    hashm.get(item).status = "At the hub"
-                    print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status))
-            elif hashm.get(item) in thirdTruckDone:
+                    searchedPackage.status = "At the hub"
+                    print(str(searchedPackage.id) + "\t" + str(searchedPackage.status) + " will arrive by " + str(searchedPackage.deliveryTime))
+            elif searchedPackage in thirdTruckDone:
                 if dateTimeInput >= thirdTruckDepart:
-                    hashm.get(item).status = "En route"
-                    print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status))
+                    searchedPackage.status = "En route"
+                    print(str(searchedPackage.id) + "\t" + str(searchedPackage.status) + " will arrive by " + str(searchedPackage.deliveryTime))
                 else:
-                    hashm.get(item).status = "At the hub"
-                    print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status))
+                    searchedPackage.status = "At the hub"
+                    print(str(searchedPackage.id) + "\t" + str(searchedPackage.status) + " will arrive by " + str(searchedPackage.deliveryTime))
         else:
-            hashm.get(item).status = "Delivered"
-            print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status))
+            searchedPackage.status = "Delivered"
+            print(str(searchedPackage.id) + "\t" + str(searchedPackage.status) + " at " + str(searchedPackage.deliveryTime))
 
-elif userInput == "quit" or userInput == 'q':
-    exit()
+    #User input 2 is to check all packages at a given time
+    elif userInput == '2':
+        timeInput = input("Enter a time to check the status of all packages (HH:MM:SS): ")
+        (hrs, min, sec) = timeInput.split(':')
+        dateTimeInput = datetime.timedelta(hours=int(hrs), minutes=int(min), seconds=int(sec))
+
+        for item in range(1,41):
+            timeOnPackage = hashm.get(item).deliveryTime
+            if timeOnPackage >= dateTimeInput:
+                if hashm.get(item) in firstTruckDone:
+                    if dateTimeInput >= firstTruckDepart:
+                        hashm.get(item).status = "En Route"
+                        print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status) + " will arrive by " + str(timeOnPackage))
+                    else:
+                        hashm.get(item).status = "At the hub"
+                        print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status) + " will arrive by " + str(timeOnPackage))
+                elif hashm.get(item) in secondTruckDone:
+                    if dateTimeInput >= secondTruckDepart:
+                        hashm.get(item).status = "En Route"
+                        print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status) + " will arrive by " + str(timeOnPackage))
+                    else:
+                        hashm.get(item).status = "At the hub"
+                        print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status) + " will arrive by " + str(timeOnPackage))
+                elif hashm.get(item) in thirdTruckDone:
+                    if dateTimeInput >= thirdTruckDepart:
+                        hashm.get(item).status = "En route"
+                        print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status) + " will arrive by " + str(timeOnPackage))
+                    else:
+                        hashm.get(item).status = "At the hub"
+                        print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status) + " will arrive by " + str(timeOnPackage))
+            else:
+                hashm.get(item).status = "Delivered"
+                print(str(hashm.get(item).id) + "\t" + str(hashm.get(item).status) + " at " + str(timeOnPackage))
+
+    elif userInput == "quit" or userInput == 'q':
+        exit()
+    else:
+        print("Please enter a valid entry")
+        userInput = input("""\nPlease select an option
+    1. Track a package by its ID number
+    2. Track all packages
+
+    Type 'quit' or 'q' to exit the program\n
+    """)
